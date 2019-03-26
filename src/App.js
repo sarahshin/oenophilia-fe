@@ -38,16 +38,36 @@ class App extends Component {
         <Sidebar.Pushable as={Segment}>
           <Sidebar as={Menu} animation='push' icon='labeled' inverted vertical visible width='thin'>
             <Menu.Item as='a'>
-              <Icon name='home' />
+              <Icon name='sign-in' />
+              Login
+            </Menu.Item>
+            <Menu.Item as='a'>
+              <Icon name='sign-out  ' />
+              Logout
+            </Menu.Item>
+            <Menu.Item as='a'>
+              <Icon name='user' />
+              Sign Up
+            </Menu.Item>
+            <Menu.Item as='a'>
+              <Icon name='user' />
               Profile
             </Menu.Item>
             <Menu.Item as='a'>
-              <Icon name='gamepad' />
-              Favourites
+              <Icon name='edit' />
+              Edit Profile
             </Menu.Item>
             <Menu.Item as='a'>
-              <Icon name='camera' />
-              History
+              <Icon name='heart' />
+              Favorite
+            </Menu.Item>
+            <Menu.Item as='a'>
+              <Icon name='food'/>
+              Past Wines Pairings
+            </Menu.Item>
+            <Menu.Item as='a'>
+              <Icon name='glass martini'/>
+              Wine List
             </Menu.Item>
           </Sidebar>
 
