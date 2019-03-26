@@ -59,8 +59,8 @@ class App extends Component {
 
   //VIEW************************************************************************
   render() {
-    // console.log(this.state.foods)
-    // console.log(this.state.wines)
+    //console.log(this.state.foods)
+    //console.log(this.state.wines)
     return (
       <div className="App">
         <Sidebar.Pushable as={Segment}>
@@ -107,6 +107,7 @@ class App extends Component {
           </Sidebar.Pusher>
         </Sidebar.Pushable>
       </div>
+
     );
   }
 }
