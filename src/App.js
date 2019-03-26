@@ -10,6 +10,7 @@ import './App.css';
 import { Icon, Menu, Segment, Sidebar } from 'semantic-ui-react'
 
 class App extends Component {
+  //LIFECYCLE*******************************************************************
   state = {
     foods: [],
     wines: [],
@@ -22,14 +23,29 @@ class App extends Component {
     logged: false,
     loginToggle: false,
     registrationToggle: false,
+    foodwines: [],
+    filteredVarietals: [],
   }
 
   componentDidMount() {
     this.fetchFoods()
     this.fetchWines()
     this.fetchUsers()
+    this.fetchFoodwines()
   }
 
+  //EVENT LISTENERS*************************************************************
+  selectFood = (fooditem) => {
+    let selectedFood = this.state.foods.find(food => food.name === fooditem)
+    let relevantPairs = this.state.foodwines.filter(pair => pair.food_id === selectedFood.id)
+    let relevantWines = relevantPairs.map(pair => pair.wine_id)
+    let newFilteredVarietals = this.state.wines.filter(wine => relevantWines.includes(wine.id))
+    this.setState({
+      filteredVarietals: newFilteredVarietals
+    })
+  }
+
+  //FETCH***********************************************************************
   fetchFoods() {
     fetch('http://localhost:3000/api/v1/foods')
     .then(r => r.json())
@@ -39,7 +55,18 @@ class App extends Component {
   fetchWines() {
     fetch('http://localhost:3000/api/v1/wines')
     .then(r => r.json())
-    .then(wines => this.setState({wines}))
+    .then(wines => {
+      this.setState({
+        wines: wines,
+        filteredVarietals: wines
+      })
+    })
+  }
+
+  fetchFoodwines() {
+    fetch('http://localhost:3000/api/v1/foodwines')
+    .then(r => r.json())
+    .then(foodwines => this.setState({ foodwines }))
   }
 
   fetchUsers() {
@@ -143,12 +170,13 @@ class App extends Component {
             <Segment.Inline>
               {this.state.loginToggle ? <LoginForm handleChange={this.handleChange} handleLogin={this.handleLogin} email={this.state.email} password={this.state.password}/> : null}
               {this.state.registrationToggle ? <Registration handleChange={this.handleChange} password={this.state.password} lastname={this.state.lastname} firstname={this.state.firstname} email={this.state.email} createUser={this.createUser}/> : null}
-              <FoodContainer foods={this.state.foods}/>
-              <WineContainer wines={this.state.wines}/>
+              <FoodContainer foods={this.state.foods} selectFood={this.selectFood}/>
+              <WineContainer wines={this.state.wines} filteredVarietals={this.state.filteredVarietals}/>
             </Segment.Inline>
           </Sidebar.Pusher>
         </Sidebar.Pushable>
       </div>
+
     );
   }
 }

@@ -1,17 +1,18 @@
 import React, { Component } from 'react'
-
 import WineCategory from './WineCategory'
-
 import { Card } from 'semantic-ui-react'
 
 export default class WineCategoryList extends Component {
 
+
+
   renderCategories() {
-    const uniqueWines = [...new Set( this.props.wines.map(wine => wine.variety)) ];
-    return uniqueWines.map(wine => <WineCategory key={wine} wine={wine}/>)
+    const uniqueWines = [...new Set( this.props.filteredVarietals.map(wine => wine.variety)) ];
+    return uniqueWines.map(wine => <WineCategory key={wine} wine={wine} handdleWineCheck={this.props.handleWineCheck}/>)
   }
 
   render() {
+    //console.log(this.props);
     return(
       <div className="border">
         <Card.Group>

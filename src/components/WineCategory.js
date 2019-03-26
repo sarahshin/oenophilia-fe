@@ -1,14 +1,19 @@
 import React, { Fragment } from 'react'
-
 import { Card } from 'semantic-ui-react'
 
-const WineCategory = ({wine}) => {
+const WineCategory = (props) => {
+  //console.log(props);
+
 
   return(
+
     <Fragment>
       <Card>
         <Card.Content>
-          <p>{wine}</p>
+        <input className="wine-check-input" type="checkbox" onChange={()=> props.handleWineCheck(props.wine)} value={props.wine} checked={null}/>
+        <label className="wine-check-label">
+          {props.wine}
+        </label>
         </Card.Content>
       </Card>
     </Fragment>
@@ -16,3 +21,12 @@ const WineCategory = ({wine}) => {
 }
 
 export default WineCategory
+
+
+// <div className="wine-check">
+//             <input className="wine-check-input" type="radio" value={wine} checked={null}/>
+//             <label className="wine-check-label">
+//               `${wine}`
+//             </label>
+//     </div>
+// </div>
