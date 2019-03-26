@@ -48,7 +48,8 @@ class App extends Component {
     .then(users => this.setState({users}))
   }
 
-  createUser = () => {
+  createUser = (event) => {
+    event.preventDefault()
     const data = {
       email: this.state.email,
       password: this.state.password,
@@ -58,7 +59,7 @@ class App extends Component {
     }
     fetch('http://localhost:3000/api/v1/users', {
       method: 'POST',
-      header: {
+      headers: {
         'Content-Type':'application/json',
         'Accepts':'application/json'
       },
@@ -66,8 +67,14 @@ class App extends Component {
     })
     .then(r => r.json())
     .then(user => {
+      localStorage.setItem('id',user.id)
       this.setState({
-        users: [...this.state.users,user]
+        users: [...this.state.users,user],
+        registrationToggle: false,
+        email: "",
+        password: "",
+        firstname: "",
+        lastname: ""
       })
     })
   }
@@ -93,11 +100,11 @@ class App extends Component {
   }
 
   handleLoginToggle = () => {
-    this.setState({loginToggle: !this.state.loginToggle})
+    this.setState({loginToggle: !this.state.loginToggle, registrationToggle: false})
   }
 
   handleRegistrationToggle = () => {
-    this.setState({registrationToggle: !this.state.registrationToggle})
+    this.setState({registrationToggle: !this.state.registrationToggle, loginToggle: false})
   }
 
   render() {

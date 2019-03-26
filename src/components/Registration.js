@@ -2,7 +2,7 @@ import React from "react"
 
 import { Form, Button, Header } from 'semantic-ui-react'
 
-const Registration = ({handleChange, firstname, lastname, email, password}) => {
+const Registration = ({handleChange, firstname, lastname, email, password, createUser}) => {
 
   return (
     <div className="logout">
@@ -28,7 +28,7 @@ const Registration = ({handleChange, firstname, lastname, email, password}) => {
           <label>Birthday</label>
           <input onChange={handleChange} type="date" name="birthday" />
         </Form.Field>
-        <Button type='submit'>Register</Button>
+        <Button type='submit' onClick={createUser}>Register</Button>
       </Form>
     </div>
   )
