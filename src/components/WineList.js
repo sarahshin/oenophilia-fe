@@ -3,9 +3,10 @@ import Wine from './Wine'
 
 import { Card } from 'semantic-ui-react'
 
-const WineList = ({ wines }) => {
+const WineList = (props) => {
+  console.log(props.checkedWines);
   const renderWine = () => {
-    return wines.map(wine => <Wine key={wine.name} wineitem={wine} />)
+    return props.checkedWines.map(wine => <Wine key={wine.name} wineitem={wine} />)
   }
 
   return (
