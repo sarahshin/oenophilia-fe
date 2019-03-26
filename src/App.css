@@ -39,8 +39,16 @@
   width: 87.5%;
 }
 
-.center {
-  margin:auto;
+.login, .logout {
+  position: absolute;
+  z-index: 1;
+  border: 1px solid black;
+  border-radius: 5px;
+  background-color: white;
+  padding: 30px;
+  margin-left: 35%;
+  margin-top: 10%;
+  width: 350px;
 }
 
 .ui.card, .ui.cards>.card {

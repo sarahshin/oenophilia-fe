@@ -2,20 +2,32 @@ import React, { Component } from 'react';
 // import logo from './logo.svg';
 import FoodContainer from './containers/FoodContainer'
 import WineContainer from './containers/WineContainer'
+import LoginForm from './components/LoginForm'
+import Registration from './components/Registration'
+
 import 'semantic-ui-css/semantic.min.css'
 import './App.css';
-
 import { Icon, Menu, Segment, Sidebar } from 'semantic-ui-react'
 
 class App extends Component {
   state = {
     foods: [],
     wines: [],
+    users: [],
+    email: "",
+    password: "",
+    firstname: "",
+    lastname: "",
+    birthday: "",
+    logged: false,
+    loginToggle: false,
+    registrationToggle: true,
   }
 
   componentDidMount() {
     this.fetchFoods()
     this.fetchWines()
+    this.fetchUsers()
   }
 
   fetchFoods() {
@@ -30,32 +42,62 @@ class App extends Component {
     .then(wines => this.setState({wines}))
   }
 
+  fetchUsers() {
+    fetch('http://localhost:3000/api/v1/users')
+    .then(r => r.json())
+    .then(users => this.setState({users}))
+  }
+
+  createUser = () => {
+    data = {
+      email: this.state.email,
+      password: this.state.password,
+      firstname: this.state.firstname,
+      lastname: this.state.lastname,
+      birthday: this.state.birthday
+    }
+    fetch('http://localhost:3000/api/v1/users', {
+      method: 'POST',
+      header: {
+        'Content-Type':'application/json',
+        'Accepts':'application/json'
+      },
+      body: JSON.stringify(body))
+    })
+  }
+
+  handleChange = (event) => {
+    this.setState({[event.target.name]: event.target.value})
+  }
+
+  handleLogin = (event) => {
+    event.preventDefault()
+    const user = this.state.users.find(user => user.email === this.state.email && user.password === this.state.password);
+    if (!!user) {
+      localStorage.setItem('id', user.id)
+      this.setState({logged: true, loginToggle: false})
+    } else {
+      return alert("Please double check your email or password.")
+    }
+  }
+
+  handleLogout = () => {
+    localStorage.clear()
+    this.setState({logged: false})
+  }
+
+  handleLoginToggle = () => {
+    this.setState({loginToggle: !this.state.loginToggle})
+  }
+
   render() {
-    console.log(this.state.foods)
-    console.log(this.state.wines)
     return (
       <div className="App">
         <Sidebar.Pushable as={Segment}>
           <Sidebar as={Menu} animation='push' icon='labeled' inverted vertical visible width='thin'>
-            <Menu.Item as='a'>
-              <Icon name='sign-in' />
-              Login
-            </Menu.Item>
-            <Menu.Item as='a'>
-              <Icon name='sign-out  ' />
+            { localStorage.getItem('id') ? <React.Fragment><Menu.Item onClick={this.handleLogout} as='a'>
+              <Icon name='sign-out' />
               Logout
-            </Menu.Item>
-            <Menu.Item as='a'>
-              <Icon name='user' />
-              Sign Up
-            </Menu.Item>
-            <Menu.Item as='a'>
-              <Icon name='user' />
-              Profile
-            </Menu.Item>
-            <Menu.Item as='a'>
-              <Icon name='edit' />
-              Edit Profile
             </Menu.Item>
             <Menu.Item as='a'>
               <Icon name='heart' />
@@ -64,7 +106,16 @@ class App extends Component {
             <Menu.Item as='a'>
               <Icon name='food'/>
               Past Wines Pairings
+            </Menu.Item></React.Fragment> :
+            <Menu.Item onClick={this.handleLoginToggle} as='a'>
+              <Icon name='sign-in' />
+              Login
             </Menu.Item>
+            }
+            { localStorage.getItem('id') ? null : <Menu.Item as='a'>
+              <Icon name='user' />
+              Sign Up
+            </Menu.Item>}
             <Menu.Item as='a'>
               <Icon name='glass martini'/>
               Wine List
@@ -73,6 +124,8 @@ class App extends Component {
 
           <Sidebar.Pusher>
             <Segment.Inline>
+              {this.state.loginToggle ? <LoginForm handleChange={this.handleChange} handleLogin={this.handleLogin} email={this.state.email} password={this.state.password}/> : null}
+              {this.state.registrationToggle ? <Registration handleChange={this.handleChange} password={this.state.password} lastname={this.state.lastname} firstname={this.state.firstname} email={this.state.email}/> : null}
               <FoodContainer foods={this.state.foods}/>
               <WineContainer wines={this.state.wines}/>
             </Segment.Inline>
