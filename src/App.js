@@ -29,13 +29,14 @@ class App extends Component {
   }
 
   render() {
-    console.log(this.state.foods)
-    console.log(this.state.wines)
+    //console.log(this.state.foods)
+    //console.log(this.state.wines)
     return (
       <div className="App">
         <FoodContainer foods={this.state.foods}/>
         <WineContainer wines={this.state.wines}/>
       </div>
+
     );
   }
 }
