@@ -21,7 +21,7 @@ class App extends Component {
     birthday: "",
     logged: false,
     loginToggle: false,
-    registrationToggle: true,
+    registrationToggle: false,
   }
 
   componentDidMount() {
@@ -49,7 +49,7 @@ class App extends Component {
   }
 
   createUser = () => {
-    data = {
+    const data = {
       email: this.state.email,
       password: this.state.password,
       firstname: this.state.firstname,
@@ -62,7 +62,13 @@ class App extends Component {
         'Content-Type':'application/json',
         'Accepts':'application/json'
       },
-      body: JSON.stringify(body))
+      body: JSON.stringify(data)
+    })
+    .then(r => r.json())
+    .then(user => {
+      this.setState({
+        users: [...this.state.users,user]
+      })
     })
   }
 
@@ -90,6 +96,10 @@ class App extends Component {
     this.setState({loginToggle: !this.state.loginToggle})
   }
 
+  handleRegistrationToggle = () => {
+    this.setState({registrationToggle: !this.state.registrationToggle})
+  }
+
   render() {
     return (
       <div className="App">
@@ -112,7 +122,7 @@ class App extends Component {
               Login
             </Menu.Item>
             }
-            { localStorage.getItem('id') ? null : <Menu.Item as='a'>
+            { localStorage.getItem('id') ? null : <Menu.Item onClick={this.handleRegistrationToggle} as='a'>
               <Icon name='user' />
               Sign Up
             </Menu.Item>}
@@ -125,7 +135,7 @@ class App extends Component {
           <Sidebar.Pusher>
             <Segment.Inline>
               {this.state.loginToggle ? <LoginForm handleChange={this.handleChange} handleLogin={this.handleLogin} email={this.state.email} password={this.state.password}/> : null}
-              {this.state.registrationToggle ? <Registration handleChange={this.handleChange} password={this.state.password} lastname={this.state.lastname} firstname={this.state.firstname} email={this.state.email}/> : null}
+              {this.state.registrationToggle ? <Registration handleChange={this.handleChange} password={this.state.password} lastname={this.state.lastname} firstname={this.state.firstname} email={this.state.email} createUser={this.createUser}/> : null}
               <FoodContainer foods={this.state.foods}/>
               <WineContainer wines={this.state.wines}/>
             </Segment.Inline>
