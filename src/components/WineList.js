@@ -1,6 +1,8 @@
 import React from "react"
 import Wine from './Wine'
 
+import { Card } from 'semantic-ui-react'
+
 const WineList = ({ wines }) => {
   const renderWine = () => {
     return wines.map(wine => <Wine key={wine.name} wineitem={wine} />)
@@ -9,7 +11,9 @@ const WineList = ({ wines }) => {
   return (
   <div className="border">
     Individual Wines
-    {renderWine()}
+    <Card.Group>
+      {renderWine()}
+    </Card.Group>
   </div>
   )
 }

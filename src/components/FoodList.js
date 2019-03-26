@@ -1,6 +1,8 @@
 import React from "react"
 import Food from './Food'
 
+import { Button } from 'semantic-ui-react'
+
 const FoodList = ({ foods }) => {
   const renderFood = () => {
     return foods.map(food => <Food key={food.name} fooditem={food} />)
@@ -8,7 +10,9 @@ const FoodList = ({ foods }) => {
 
   return (
   <div className="border">
-    {renderFood()}
+    <Button.Group>
+      {renderFood()}
+    </Button.Group>
   </div>
   )
 }

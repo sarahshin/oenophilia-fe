@@ -4,7 +4,7 @@ import { Card, Icon, Image } from 'semantic-ui-react'
 
 const Wine = ({ wineitem }) => {
   return (
-  <Card.Group>
+  <React.Fragment>
     <Card>
       <Card.Content>
         <p>{wineitem.name}</p>
@@ -14,7 +14,7 @@ const Wine = ({ wineitem }) => {
       </Card.Content>
       <img src={wineitem.img} style={{width:'50px'}} alt={wineitem.name}/>
     </Card>
-  </Card.Group>
+  </React.Fragment>
   )
 }
 
