@@ -8,16 +8,32 @@ import './App.css';
 import { Icon, Menu, Segment, Sidebar } from 'semantic-ui-react'
 
 class App extends Component {
+  //LIFECYCLE*******************************************************************
   state = {
     foods: [],
     wines: [],
+    foodwines: [],
+    filteredVarietals: [],
   }
 
   componentDidMount() {
     this.fetchFoods()
     this.fetchWines()
+    this.fetchFoodwines()
   }
 
+  //EVENT LISTENERS*************************************************************
+  selectFood = (fooditem) => {
+    let selectedFood = this.state.foods.find(food => food.name === fooditem)
+    let relevantPairs = this.state.foodwines.filter(pair => pair.food_id === selectedFood.id)
+    let relevantWines = relevantPairs.map(pair => pair.wine_id)
+    let newFilteredVarietals = this.state.wines.filter(wine => relevantWines.includes(wine.id))
+    this.setState({
+      filteredVarietals: newFilteredVarietals
+    })
+  }
+
+  //FETCH***********************************************************************
   fetchFoods() {
     fetch('http://localhost:3000/api/v1/foods')
     .then(r => r.json())
@@ -27,12 +43,24 @@ class App extends Component {
   fetchWines() {
     fetch('http://localhost:3000/api/v1/wines')
     .then(r => r.json())
-    .then(wines => this.setState({wines}))
+    .then(wines => {
+      this.setState({
+        wines: wines,
+        filteredVarietals: wines
+      })
+    })
   }
 
+  fetchFoodwines() {
+    fetch('http://localhost:3000/api/v1/foodwines')
+    .then(r => r.json())
+    .then(foodwines => this.setState({ foodwines }))
+  }
+
+  //VIEW************************************************************************
   render() {
-    console.log(this.state.foods)
-    console.log(this.state.wines)
+    // console.log(this.state.foods)
+    // console.log(this.state.wines)
     return (
       <div className="App">
         <Sidebar.Pushable as={Segment}>
@@ -42,7 +70,7 @@ class App extends Component {
               Login
             </Menu.Item>
             <Menu.Item as='a'>
-              <Icon name='sign-out  ' />
+              <Icon name='sign-out' />
               Logout
             </Menu.Item>
             <Menu.Item as='a'>
@@ -73,8 +101,8 @@ class App extends Component {
 
           <Sidebar.Pusher>
             <Segment.Inline>
-              <FoodContainer foods={this.state.foods}/>
-              <WineContainer wines={this.state.wines}/>
+              <FoodContainer foods={this.state.foods} selectFood={this.selectFood}/>
+              <WineContainer wines={this.state.wines} filteredVarietals={this.state.filteredVarietals}/>
             </Segment.Inline>
           </Sidebar.Pusher>
         </Sidebar.Pushable>

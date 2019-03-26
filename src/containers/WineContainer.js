@@ -9,7 +9,7 @@ class WineContainer extends React.Component {
   render() {
     return (
       <div>
-        <WineCategoryList wines={this.props.wines}/>
+        <WineCategoryList filteredVarietals={this.props.filteredVarietals}/>
         <WineList wines={this.props.wines}/>
       </div>
     )
