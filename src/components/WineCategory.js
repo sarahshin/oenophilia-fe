@@ -1,6 +1,6 @@
-import React, { Component, Fragment } from 'react'
+import React, { Fragment } from 'react'
 
-import { Card, Icon, Image } from 'semantic-ui-react'
+import { Card } from 'semantic-ui-react'
 
 const WineCategory = ({wine}) => {
 

@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import FoodContainer from './containers/FoodContainer'
 import WineContainer from './containers/WineContainer'
 import 'semantic-ui-css/semantic.min.css'
 import './App.css';
+
+import { Icon, Menu, Segment, Sidebar } from 'semantic-ui-react'
 
 class App extends Component {
   state = {
@@ -33,8 +35,29 @@ class App extends Component {
     console.log(this.state.wines)
     return (
       <div className="App">
-        <FoodContainer foods={this.state.foods}/>
-        <WineContainer wines={this.state.wines}/>
+        <Sidebar.Pushable as={Segment}>
+          <Sidebar as={Menu} animation='push' icon='labeled' inverted vertical visible width='thin'>
+            <Menu.Item as='a'>
+              <Icon name='home' />
+              Profile
+            </Menu.Item>
+            <Menu.Item as='a'>
+              <Icon name='gamepad' />
+              Favourites
+            </Menu.Item>
+            <Menu.Item as='a'>
+              <Icon name='camera' />
+              History
+            </Menu.Item>
+          </Sidebar>
+
+          <Sidebar.Pusher>
+            <Segment.Inline>
+              <FoodContainer foods={this.state.foods}/>
+              <WineContainer wines={this.state.wines}/>
+            </Segment.Inline>
+          </Sidebar.Pusher>
+        </Sidebar.Pushable>
       </div>
     );
   }
