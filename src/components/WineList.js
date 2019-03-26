@@ -11,9 +11,11 @@ const WineList = ({ wines }) => {
   return (
   <div className="border">
     Individual Wines
-    <Card.Group>
-      {renderWine()}
-    </Card.Group>
+    <div className="center">
+      <Card.Group>
+        {renderWine()}
+      </Card.Group>
+    </div>
   </div>
   )
 }
