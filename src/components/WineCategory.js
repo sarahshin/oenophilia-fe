@@ -10,7 +10,7 @@ const WineCategory = (props) => {
     <Fragment>
       <Card>
         <Card.Content>
-        <input className="wine-check-input" type="checkbox" onChange={()=> props.handleWineCheck(props.wine)} value={props.wine} checked={null}/>
+        <input className="wine-check-input" type="checkbox" onChange={()=> props.handleWineCheck(props.wine)} value={props.wine} checked={props.checked}/>
         <label className="wine-check-label">
           {props.wine}
         </label>
@@ -21,12 +21,3 @@ const WineCategory = (props) => {
 }
 
 export default WineCategory
-
-
-// <div className="wine-check">
-//             <input className="wine-check-input" type="radio" value={wine} checked={null}/>
-//             <label className="wine-check-label">
-//               `${wine}`
-//             </label>
-//     </div>
-// </div>

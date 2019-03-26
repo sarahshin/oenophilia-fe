@@ -11,28 +11,30 @@ class WineContainer extends React.Component {
     filteredWines: []
   }
 
-  handleCheck = pickedWine =>{
-    //console.log("Hellooooo from Container", wine);
-    //console.log(pickedWine);
-    const filtered = this.props.wines.filter(wine => {
-      return (wine.variety === pickedWine)
+  handleCheck = pickedWine => {
 
-      })
-      let checkedWines = [...this.state.filteredWines, filtered]
-      this.setState({
-        filteredWines: checkedWines
-      })
-
-      //console.log(filtered);
-  }
+     let filteredWines = this.props.wines.filter(wine => wine.variety === pickedWine)
+    if(this.state.checked === null){
+         this.setState({
+           filteredWines: filteredWines,
+           checked: true
+         })
+       } else if(this.state.checked === true){
+       this.setState({
+         filteredWines: [...this.state.filteredWines, ...filteredWines]
+       })
+     }
+   }
 
   render() {
-    //console.log(this.state.filteredWines);
+    //console.log(...this.state.filteredWines);
 
     return (
       <div>
-        <WineCategoryList filteredVarietals={this.props.filteredVarietals} handleWineCheck={this.handleCheck}/>
-        <WineList wines={this.props.wines}/>
+        <WineCategoryList wines={this.props.wines}
+        handleWineCheck={this.handleCheck}/>
+        <WineList checkedWines={this.state.filteredWines}
+        checked={this.state.checked}/>
       </div>
     )
   }
