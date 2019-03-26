@@ -8,7 +8,7 @@ class FoodContainer extends React.Component {
   render() {
     return (
       <div>
-      <FoodList />
+        <FoodList foods={this.props.foods}/>
       </div>
     )
   }

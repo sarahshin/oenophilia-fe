@@ -8,7 +8,7 @@ class WineContainer extends React.Component {
   render() {
     return (
       <div>
-        <WineList />
+        <WineList wines={this.props.wines}/>
       </div>
     )
   }

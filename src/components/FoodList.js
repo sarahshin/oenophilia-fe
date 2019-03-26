@@ -1,10 +1,14 @@
 import React from "react"
 import Food from './Food'
 
-const FoodList = () => {
+const FoodList = ({ foods }) => {
+  const renderFood = () => {
+    return foods.map(food => <Food key={food.name} fooditem={food} />)
+  }
+
   return (
-  <div className="">
-    <Food />
+  <div className="border">
+    {renderFood()}
   </div>
   )
 }

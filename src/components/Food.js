@@ -1,9 +1,14 @@
 import React from "react"
 
-const Food = () => {
+import { Button, Icon } from 'semantic-ui-react'
+
+const Food = ({fooditem}) => {
   return (
   <div className="">
-    Individual Foods
+    <Button icon>
+      <Icon name='pause' />
+      {fooditem.name}
+    </Button>
   </div>
   )
 }
