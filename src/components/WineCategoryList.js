@@ -8,7 +8,8 @@ export default class WineCategoryList extends Component {
 
   renderCategories() {
     const uniqueWines = [...new Set( this.props.filteredVarietals.map(wine => wine.variety)) ];
-    return uniqueWines.map(wine => <WineCategory key={wine} wine={wine} handleWineCheck={this.props.handleWineCheck}/>)
+    return uniqueWines.map(wine => <WineCategory key={wine} wine={wine} handleWineCheck={this.props.handleWineCheck}
+    checked={this.props.checked}/>)
   }
 
   render() {

@@ -13,9 +13,8 @@ const WineCategory = (props) => {
         <input
           className="wine-check-input"
           type="checkbox"
-          onChange={()=> props.handleWineCheck(props.wine)}
+          onChange={(e)=> props.handleWineCheck(e)}
           value={props.wine}
-          checked={props.checked}
         />
         <label className="wine-check-label">
           {props.wine}
