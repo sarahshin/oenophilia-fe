@@ -8,30 +8,10 @@ import FullWineList from '../components/FullWineList'
 class WineContainer extends React.Component {
 
   state = {
-<<<<<<< HEAD
-    checked: null,
+    checked: false,
     filteredWines: [],
   }
 
-  handleCheck = (pickedWine) => {
-    let filteredWines = this.props.wines.filter(wine => wine.variety === pickedWine)
-    if (this.state.checked === null){
-      this.setState({
-        filteredWines: filteredWines,
-        checked: true
-      })
-    } else if(this.state.checked === true){
-    this.setState({
-      filteredWines: [...this.state.filteredWines, ...filteredWines]
-    })
-  }
- }
-
-  render() {
-=======
-    checked: false,
-    filteredWines: []
-  }
 
   handleCheck = (e) => {
     console.log(e.target.checked);
@@ -53,7 +33,6 @@ class WineContainer extends React.Component {
 
   render() {
 
->>>>>>> toggle
     return (
       <div>
         {this.props.wineListToggle ? <FullWineList wines={this.props.wines}/> : null}
