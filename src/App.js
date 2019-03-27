@@ -25,6 +25,7 @@ class App extends Component {
     registrationToggle: false,
     foodwines: [],
     filteredVarietals: [],
+    wineListToggle: false,
   }
 
   componentDidMount() {
@@ -115,7 +116,12 @@ class App extends Component {
     const user = this.state.users.find(user => user.email === this.state.email && user.password === this.state.password);
     if (!!user) {
       localStorage.setItem('id', user.id)
-      this.setState({logged: true, loginToggle: false})
+      this.setState({
+        logged: true,
+        loginToggle: false,
+        email: "",
+        password: "",
+      })
     } else {
       return alert("Please double check your email or password.")
     }
@@ -134,9 +140,15 @@ class App extends Component {
     this.setState({registrationToggle: !this.state.registrationToggle, loginToggle: false})
   }
 
+  handleWineListToggle = () => {
+    this.setState({wineListToggle: !this.state.wineListToggle})
+  }
+
   render() {
     return (
       <div className="App">
+        {this.state.loginToggle ? <LoginForm handleChange={this.handleChange} handleLogin={this.handleLogin} email={this.state.email} password={this.state.password}/> : null}
+        {this.state.registrationToggle ? <Registration handleChange={this.handleChange} password={this.state.password} lastname={this.state.lastname} firstname={this.state.firstname} email={this.state.email} createUser={this.createUser}/> : null}
         <Sidebar.Pushable as={Segment}>
           <Sidebar as={Menu} animation='push' icon='labeled' inverted vertical visible width='thin'>
             { localStorage.getItem('id') ? <React.Fragment><Menu.Item onClick={this.handleLogout} as='a'>
@@ -160,7 +172,7 @@ class App extends Component {
               <Icon name='user' />
               Sign Up
             </Menu.Item>}
-            <Menu.Item as='a'>
+            <Menu.Item onClick={this.handleWineListToggle} as='a'>
               <Icon name='glass martini'/>
               Wine List
             </Menu.Item>
@@ -168,10 +180,15 @@ class App extends Component {
 
           <Sidebar.Pusher>
             <Segment.Inline>
-              {this.state.loginToggle ? <LoginForm handleChange={this.handleChange} handleLogin={this.handleLogin} email={this.state.email} password={this.state.password}/> : null}
-              {this.state.registrationToggle ? <Registration handleChange={this.handleChange} password={this.state.password} lastname={this.state.lastname} firstname={this.state.firstname} email={this.state.email} createUser={this.createUser}/> : null}
-              <FoodContainer foods={this.state.foods} selectFood={this.selectFood}/>
-              <WineContainer wines={this.state.wines} filteredVarietals={this.state.filteredVarietals}/>
+              <FoodContainer
+                foods={this.state.foods}
+                selectFood={this.selectFood}
+              />
+              <WineContainer
+                wines={this.state.wines}
+                filteredVarietals={this.state.filteredVarietals}
+                wineListToggle={this.state.wineListToggle}
+              />
             </Segment.Inline>
           </Sidebar.Pusher>
         </Sidebar.Pushable>
