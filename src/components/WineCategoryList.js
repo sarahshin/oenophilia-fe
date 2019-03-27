@@ -16,6 +16,7 @@ export default class WineCategoryList extends Component {
     //console.log(this.props);
     return(
       <div className="border">
+        <h3>Select a Wine Category</h3>
         <Card.Group>
           {this.renderCategories()}
         </Card.Group>
