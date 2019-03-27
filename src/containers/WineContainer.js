@@ -7,33 +7,36 @@ import WineCategoryList from '../components/WineCategoryList'
 class WineContainer extends React.Component {
 
   state = {
-    checked: null,
+    checked: false,
     filteredWines: []
   }
 
-  handleCheck = pickedWine => {
+  handleCheck = (e) => {
+    console.log(e.target.checked);
 
-     let filteredWines = this.props.wines.filter(wine => wine.variety === pickedWine)
-    if(this.state.checked === null){
+     let filteredWines = this.props.wines.filter(wine => wine.variety === e.target.value)
+    if(e.target.checked === true){
          this.setState({
-           filteredWines: filteredWines,
-           checked: true
+           filteredWines: [...this.state.filteredWines, ...filteredWines]
          })
-       } else if(this.state.checked === true){
-       this.setState({
-         filteredWines: [...this.state.filteredWines, ...filteredWines]
-       })
-     }
+       } else if(e.target.checked === false){
+         let alteredList = this.state.filteredWines.filter(wine => wine.variety !== e.target.value)
+         this.setState({
+           filteredWines: alteredList
+         })
+        //console.log("Hellooooo", e.target.value);
+        }
+
    }
 
   render() {
-    //console.log(...this.state.filteredWines);
 
     return (
       <div>
         <WineCategoryList
           filteredVarietals={this.props.filteredVarietals}
           handleWineCheck={this.handleCheck}
+          checked={this.state.checked}
         />
         <WineList
           checkedWines={this.state.filteredWines}
