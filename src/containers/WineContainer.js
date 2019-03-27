@@ -49,6 +49,7 @@ class WineContainer extends React.Component {
         <WineList
           checkedWines={this.state.filteredWines}
           checked={this.state.checked}
+          addToFavorites={this.props.addToFavorites}
         />
       </div>
     )

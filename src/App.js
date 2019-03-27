@@ -26,6 +26,7 @@ class App extends Component {
     registrationToggle: false,
     foodwines: [],
     filteredVarietals: [],
+    myFavorites: [],
     wineListToggle: false,
     pairsToggle: false,
     displayToggle: false,
@@ -36,6 +37,7 @@ class App extends Component {
     this.fetchWines()
     this.fetchUsers()
     this.fetchFoodwines()
+    this.fetchMyFavorites()
     this.fetchReviews()
   }
 
@@ -48,6 +50,35 @@ class App extends Component {
     this.setState({
       filteredVarietals: newFilteredVarietals
     })
+  }
+
+  addToFavorites = (wineID, userID) => {
+    if (!this.state.myFavorites.find(fave => fave.wine_id === wineID)){
+      fetch('http://localhost:3000/api/v1/favorites', {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Accepts": "application/json"
+        },
+        body: JSON.stringify({
+          wine_id: wineID,
+          user_id: userID
+        })
+      })
+      .then(r => r.json())
+      .then(favorite => {
+        this.setState({
+          myFavorites: [...this.state.myFavorites,favorite]
+        }, ()=>console.log(this.state.myFavorites, "added"))
+      })
+    } else {
+      let favoriteToDelete = this.state.myFavorites.find(favorite => favorite.user_id === userID && favorite.wine_id === wineID)
+      fetch(`http://localhost:3000/api/v1/favorites/${favoriteToDelete.id}`, {
+        method: "DELETE"
+      })
+      let updatedFavorite = this.state.myFavorites.filter(fav => fav.wine_id !== wineID)
+      this.setState({ myFavorites: updatedFavorite })
+    }
   }
 
   //FETCH***********************************************************************
@@ -78,6 +109,16 @@ class App extends Component {
     fetch('http://localhost:3000/api/v1/users')
     .then(r => r.json())
     .then(users => this.setState({users}))
+  }
+
+
+  fetchMyFavorites() {
+    fetch('http://localhost:3000/api/v1/favorites')
+    .then(r => r.json())
+    .then(favorites => {
+      let myFavorites = favorites.filter(favorite => favorite.user_id === parseInt(localStorage.id))
+      this.setState({ myFavorites })
+    })
   }
 
   fetchReviews() {
@@ -270,6 +311,7 @@ class App extends Component {
                   <WineContainer
                     wines={this.state.wines}
                     filteredVarietals={this.state.filteredVarietals}
+                    addToFavorites={this.addToFavorites}
                   />
                 </React.Fragment>
               }
