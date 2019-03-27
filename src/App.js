@@ -31,6 +31,7 @@ class App extends Component {
     pairsToggle: false,
     displayToggle: false,
     favoritesToggle: false,
+    selectedFood: null,
   }
 
   componentDidMount() {
@@ -49,8 +50,9 @@ class App extends Component {
     let relevantWines = relevantPairs.map(pair => pair.wine_id)
     let newFilteredVarietals = this.state.wines.filter(wine => relevantWines.includes(wine.id))
     this.setState({
+      selectedFood: selectedFood,
       filteredVarietals: newFilteredVarietals
-    })
+    },()=>console.log(this.state.selectedFood))
   }
 
   addToFavorites = (wineID, userID) => {
@@ -241,7 +243,9 @@ class App extends Component {
       wineListToggle: false,
       displayToggle: false,
       pairsToggle: false,
-      favoritesToggle: false
+      favoritesToggle: false,
+      selectedFood: null,
+      filteredVarietals: this.state.wines
     })
   }
 
@@ -322,15 +326,23 @@ class App extends Component {
                   addToFavorites={this.addToFavorites}
                 /> :
                 <React.Fragment>
-                  <FoodContainer
+                  {this.state.selectedFood === null ?
+                    <FoodContainer
                     foods={this.state.foods}
                     selectFood={this.selectFood}
-                  />
-                  <WineContainer
-                    wines={this.state.wines}
-                    filteredVarietals={this.state.filteredVarietals}
-                    addToFavorites={this.addToFavorites}
-                  />
+                    /> :
+                    <React.Fragment>
+                      <FoodContainer
+                      foods={this.state.foods}
+                      selectFood={this.selectFood}
+                      />
+                      <WineContainer
+                      wines={this.state.wines}
+                      filteredVarietals={this.state.filteredVarietals}
+                      addToFavorites={this.addToFavorites}
+                      />
+                    </React.Fragment>
+                  }
                 </React.Fragment>
               }
             </Segment.Inline>
