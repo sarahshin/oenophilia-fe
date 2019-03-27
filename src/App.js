@@ -30,8 +30,12 @@ class App extends Component {
     wineListToggle: false,
     pairsToggle: false,
     displayToggle: false,
+<<<<<<< HEAD
     favoritesToggle: false,
     selectedFood: null,
+=======
+    myPairs: []
+>>>>>>> pairings
   }
 
   componentDidMount() {
@@ -45,6 +49,7 @@ class App extends Component {
 
   //EVENT LISTENERS*************************************************************
   selectFood = (fooditem) => {
+    console.log(fooditem);
     let selectedFood = this.state.foods.find(food => food.name === fooditem)
     let relevantPairs = this.state.foodwines.filter(pair => pair.food_id === selectedFood.id)
     let relevantWines = relevantPairs.map(pair => pair.wine_id)
@@ -249,6 +254,10 @@ class App extends Component {
     })
   }
 
+  addToPairings = (wine) => {
+    console.log("Hello From APPPP", wine);
+  }
+
   render() {
     return (
       <div className="App">
@@ -330,6 +339,7 @@ class App extends Component {
                     <FoodContainer
                     foods={this.state.foods}
                     selectFood={this.selectFood}
+<<<<<<< HEAD
                     /> :
                     <React.Fragment>
                       <FoodContainer
@@ -343,6 +353,16 @@ class App extends Component {
                       />
                     </React.Fragment>
                   }
+=======
+                    addToPairings={this.addToPairings}
+                  />
+                  <WineContainer
+                    wines={this.state.wines}
+                    filteredVarietals={this.state.filteredVarietals}
+                    addToFavorites={this.addToFavorites}
+                    addToPairings={this.addToPairings}
+                  />
+>>>>>>> pairings
                 </React.Fragment>
               }
             </Segment.Inline>

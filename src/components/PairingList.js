@@ -9,7 +9,7 @@ const PairingList = ({ foodwines, foods, wines, reviews }) => {
   const myFoodWines = myReviews.map(myFW => foodwines.find(foodwine => myFW.foodwine_id === foodwine.id))
 
   const renderPairs = () => {
-    console.log(myFoodWines)
+    //console.log(myFoodWines)
     return myFoodWines.map(pair => <Pairs key={`pair_${pair.id}`} pair={pair} foods={foods} wines={wines}/>)
   }
 
