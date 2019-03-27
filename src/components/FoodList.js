@@ -3,10 +3,11 @@ import Food from './Food'
 
 import { Button } from 'semantic-ui-react'
 
-const FoodList = ({foods, selectFood}) => {
+const FoodList = ({foods, selectFood, addToPairings}) => {
 
   const renderFood = () => {
-    return foods.map(food => <Food selectFood={selectFood} key={food.name} fooditem={food} />)
+    return foods.map(food => <Food selectFood={selectFood} key={food.name} fooditem={food}
+    addToPairings={addToPairings} />)
   }
 
   return (

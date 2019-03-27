@@ -50,6 +50,7 @@ class WineContainer extends React.Component {
           checkedWines={this.state.filteredWines}
           checked={this.state.checked}
           addToFavorites={this.props.addToFavorites}
+          addToPairings={this.props.addToPairings}
         />
       </div>
     )
