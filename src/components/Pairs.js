@@ -12,8 +12,8 @@ const Pairs = ({ pair, foods, wines }) => {
   <React.Fragment>
     <Card>
       <Card.Content>
-        <p>{findFood.name}</p>
-        <p>{findWine.name}</p>
+        <p>Dish: {findFood.name}</p>
+        <p>Wine: {findWine.name}</p>
       </Card.Content>
     </Card>
   </React.Fragment>)

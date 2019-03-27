@@ -10,7 +10,7 @@ class ProfileContainer extends React.Component {
     return (
       <div>
         {this.props.wineListToggle ? <FullWineList wines={this.props.wines}/> : null}
-        {this.props.pairsToggle ? <PairingList foodwines={this.props.foodwines} foods={this.props.foods} wines={this.props.wines}/> : null}
+        {this.props.pairsToggle ? <PairingList foodwines={this.props.foodwines} foods={this.props.foods} wines={this.props.wines} reviews={this.props.reviews}/> : null}
       </div>
     )
   }
