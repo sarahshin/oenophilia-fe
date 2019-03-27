@@ -1,6 +1,8 @@
 import React from "react"
 
-import { Card } from 'semantic-ui-react'
+import ReviewForm from './ReviewForm'
+
+import { Card, Button } from 'semantic-ui-react'
 
 const Pairs = ({ pair, foods, wines }) => {
   //console.log(wineitem);
@@ -15,6 +17,8 @@ const Pairs = ({ pair, foods, wines }) => {
         <p>Dish: {findFood.name}</p>
         <p>Wine: {findWine.name}</p>
       </Card.Content>
+      <ReviewForm />
+      <Button color="red">Remove</Button>
     </Card>
   </React.Fragment>)
 }

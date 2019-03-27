@@ -11,11 +11,10 @@ const WineList = (props) => {
 
   return (
   <div className="border">
-    <div className="center">
-      <Card.Group>
-        {renderWine()}
-      </Card.Group>
-    </div>
+    <h3>Select a Wine</h3>
+    <Card.Group>
+      {renderWine()}
+    </Card.Group>
   </div>
   )
 }

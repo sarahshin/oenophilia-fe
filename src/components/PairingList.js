@@ -10,16 +10,22 @@ const PairingList = ({ foodwines, foods, wines, reviews }) => {
 
   const renderPairs = () => {
     console.log(myFoodWines)
-    return myFoodWines.map(pair => <Pairs key={`pair_${pair.id}`} pair={pair} foods={foods} wines={wines}/>)
+    return myFoodWines.map(pair => <Pairs
+      key={`pair_${pair.id}`}
+      pair={pair} foods={foods}
+      wines={wines}
+    />)
   }
 
   return (
-  <div className="border">
-    <h3>Previous Pairings:</h3>
-    <Card.Group>
-      {renderPairs()}
-    </Card.Group>
-  </div>
+    <React.Fragment>
+      <div className="border">
+        <h3>Previous Pairings:</h3>
+        <Card.Group>
+          {renderPairs()}
+        </Card.Group>
+      </div>
+    </React.Fragment>
   )
 }
 

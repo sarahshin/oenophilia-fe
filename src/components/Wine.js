@@ -19,7 +19,7 @@ const Wine = ({ wineitem, addToFavorites }) => {
       <p>{wineitem.description}</p>
       </Card.Content>
       <img src={wineitem.img} style={{width:'50px'}} alt={wineitem.name} />
-      <Button onClick={()=>handleClick(wineitem)} icon>
+      <Button onClick={()=>handleClick(wineitem)} icon color='red'>
         <Icon name='heart outline' />
       </Button>
       <Button>
