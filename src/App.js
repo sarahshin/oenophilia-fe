@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 // import logo from './logo.svg';
 import FoodContainer from './containers/FoodContainer'
 import WineContainer from './containers/WineContainer'
+import ProfileContainer from './containers/ProfileContainer'
 import LoginForm from './components/LoginForm'
 import Registration from './components/Registration'
 
@@ -15,17 +16,20 @@ class App extends Component {
     foods: [],
     wines: [],
     users: [],
+    reviews: [],
     email: "",
     password: "",
     firstname: "",
     lastname: "",
     birthday: "",
-    logged: false,
     loginToggle: false,
     registrationToggle: false,
     foodwines: [],
     filteredVarietals: [],
     myFavorites: [],
+    wineListToggle: false,
+    pairsToggle: false,
+    displayToggle: false,
   }
 
   componentDidMount() {
@@ -34,6 +38,7 @@ class App extends Component {
     this.fetchUsers()
     this.fetchFoodwines()
     this.fetchMyFavorites()
+    this.fetchReviews()
   }
 
   //EVENT LISTENERS*************************************************************
@@ -106,6 +111,7 @@ class App extends Component {
     .then(users => this.setState({users}))
   }
 
+
   fetchMyFavorites() {
     fetch('http://localhost:3000/api/v1/favorites')
     .then(r => r.json())
@@ -114,6 +120,18 @@ class App extends Component {
       this.setState({ myFavorites })
     })
   }
+
+  fetchReviews() {
+    fetch('http://localhost:3000/api/v1/reviews')
+    .then(r => r.json())
+    .then(reviews => {
+      this.setState({
+        reviews
+      })
+    })
+  }
+
+  //HELPER METHODS**************************************************************
 
   createUser = (event) => {
     event.preventDefault()
@@ -155,7 +173,11 @@ class App extends Component {
     const user = this.state.users.find(user => user.email === this.state.email && user.password === this.state.password);
     if (!!user) {
       localStorage.setItem('id', user.id)
-      this.setState({logged: true, loginToggle: false})
+      this.setState({
+        loginToggle: false,
+        email: "",
+        password: "",
+      })
     } else {
       return alert("Please double check your email or password.")
     }
@@ -163,44 +185,108 @@ class App extends Component {
 
   handleLogout = () => {
     localStorage.clear()
-    this.setState({logged: false})
+    this.setState({
+      wineListToggle: false,
+      pairsToggle: false,
+      displayToggle: false
+    })
   }
 
   handleLoginToggle = () => {
-    this.setState({loginToggle: !this.state.loginToggle, registrationToggle: false})
+    this.setState({
+      loginToggle: !this.state.loginToggle,
+      registrationToggle: false
+    })
   }
 
   handleRegistrationToggle = () => {
-    this.setState({registrationToggle: !this.state.registrationToggle, loginToggle: false})
+    this.setState({
+      registrationToggle: !this.state.registrationToggle,
+      loginToggle: false
+    })
+  }
+
+  handleWineListToggle = () => {
+    this.setState({
+      wineListToggle: !this.state.wineListToggle,
+      displayToggle: !this.state.displayToggle,
+      pairsToggle: false
+    })
+  }
+
+  handlePairListToggle = () => {
+    this.setState({
+      wineListToggle: false,
+      displayToggle: !this.state.displayToggle,
+      pairsToggle: !this.state.pairsToggle
+    })
+  }
+
+  handleHome = () => {
+    this.setState({
+      wineListToggle: false,
+      displayToggle: false,
+      pairsToggle: false
+    })
   }
 
   render() {
     return (
       <div className="App">
+        {this.state.loginToggle ?
+          <LoginForm
+            handleChange={this.handleChange}
+            handleLogin={this.handleLogin}
+            email={this.state.email}
+            password={this.state.password}
+          /> :
+          null
+        }
+        {this.state.registrationToggle ?
+           <Registration
+             handleChange={this.handleChange}
+             password={this.state.password}
+             lastname={this.state.lastname}
+             firstname={this.state.firstname}
+             email={this.state.email}
+             createUser={this.createUser}
+            /> :
+            null
+          }
         <Sidebar.Pushable as={Segment}>
           <Sidebar as={Menu} animation='push' icon='labeled' inverted vertical visible width='thin'>
-            { localStorage.getItem('id') ? <React.Fragment><Menu.Item onClick={this.handleLogout} as='a'>
-              <Icon name='sign-out' />
-              Logout
+            <Menu.Item onClick={this.handleHome} as='a'>
+              <Icon name='home' />
+              Home
             </Menu.Item>
-            <Menu.Item as='a'>
-              <Icon name='heart' />
-              Favorite
-            </Menu.Item>
-            <Menu.Item as='a'>
-              <Icon name='food'/>
-              Past Wines Pairings
-            </Menu.Item></React.Fragment> :
+            { localStorage.getItem('id') ?
+              <React.Fragment>
+                <Menu.Item onClick={this.handleLogout} as='a'>
+                  <Icon name='sign-out' />
+                  Logout
+                </Menu.Item>
+                <Menu.Item as='a'>
+                  <Icon name='heart' />
+                  Favorite
+                </Menu.Item>
+                <Menu.Item onClick={this.handlePairListToggle} as='a'>
+                  <Icon name='food'/>
+                  Past Wines Pairings
+                </Menu.Item>
+              </React.Fragment> :
             <Menu.Item onClick={this.handleLoginToggle} as='a'>
               <Icon name='sign-in' />
               Login
             </Menu.Item>
             }
-            { localStorage.getItem('id') ? null : <Menu.Item onClick={this.handleRegistrationToggle} as='a'>
-              <Icon name='user' />
-              Sign Up
-            </Menu.Item>}
-            <Menu.Item as='a'>
+            { localStorage.getItem('id') ?
+              null :
+              <Menu.Item onClick={this.handleRegistrationToggle} as='a'>
+                <Icon name='user' />
+                Sign Up
+              </Menu.Item>
+            }
+            <Menu.Item onClick={this.handleWineListToggle} as='a'>
               <Icon name='glass martini'/>
               Wine List
             </Menu.Item>
@@ -208,10 +294,27 @@ class App extends Component {
 
           <Sidebar.Pusher>
             <Segment.Inline>
-              {this.state.loginToggle ? <LoginForm handleChange={this.handleChange} handleLogin={this.handleLogin} email={this.state.email} password={this.state.password}/> : null}
-              {this.state.registrationToggle ? <Registration handleChange={this.handleChange} password={this.state.password} lastname={this.state.lastname} firstname={this.state.firstname} email={this.state.email} createUser={this.createUser}/> : null}
-              <FoodContainer foods={this.state.foods} selectFood={this.selectFood}/>
-              <WineContainer wines={this.state.wines} filteredVarietals={this.state.filteredVarietals} addToFavorites={this.addToFavorites}/>
+              {this.state.displayToggle ?
+                <ProfileContainer
+                  wines={this.state.wines}
+                  wineListToggle={this.state.wineListToggle}
+                  foodwines={this.state.foodwines}
+                  pairsToggle={this.state.pairsToggle}
+                  foods={this.state.foods}
+                  reviews={this.state.reviews}
+                /> :
+                <React.Fragment>
+                  <FoodContainer
+                    foods={this.state.foods}
+                    selectFood={this.selectFood}
+                  />
+                  <WineContainer
+                    wines={this.state.wines}
+                    filteredVarietals={this.state.filteredVarietals}
+                    addToFavorites={this.addToFavorites}
+                  />
+                </React.Fragment>
+              }
             </Segment.Inline>
           </Sidebar.Pusher>
         </Sidebar.Pushable>

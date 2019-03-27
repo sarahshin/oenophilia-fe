@@ -8,7 +8,10 @@ class FoodContainer extends React.Component {
   render() {
     return (
       <div>
-        <FoodList foods={this.props.foods} selectFood={this.props.selectFood}/>
+        <FoodList
+          foods={this.props.foods}
+          selectFood={this.props.selectFood}
+        />
       </div>
     )
   }
