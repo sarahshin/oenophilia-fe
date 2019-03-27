@@ -8,6 +8,7 @@ import FullWineList from '../components/FullWineList'
 class WineContainer extends React.Component {
 
   state = {
+<<<<<<< HEAD
     checked: null,
     filteredWines: [],
   }
@@ -27,12 +28,39 @@ class WineContainer extends React.Component {
  }
 
   render() {
+=======
+    checked: false,
+    filteredWines: []
+  }
+
+  handleCheck = (e) => {
+    console.log(e.target.checked);
+
+     let filteredWines = this.props.wines.filter(wine => wine.variety === e.target.value)
+    if(e.target.checked === true){
+         this.setState({
+           filteredWines: [...this.state.filteredWines, ...filteredWines]
+         })
+       } else if(e.target.checked === false){
+         let alteredList = this.state.filteredWines.filter(wine => wine.variety !== e.target.value)
+         this.setState({
+           filteredWines: alteredList
+         })
+        //console.log("Hellooooo", e.target.value);
+        }
+
+   }
+
+  render() {
+
+>>>>>>> toggle
     return (
       <div>
         {this.props.wineListToggle ? <FullWineList wines={this.props.wines}/> : null}
         <WineCategoryList
           filteredVarietals={this.props.filteredVarietals}
           handleWineCheck={this.handleCheck}
+          checked={this.state.checked}
         />
         <WineList
           checkedWines={this.state.filteredWines}
