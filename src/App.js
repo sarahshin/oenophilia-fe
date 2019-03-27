@@ -30,6 +30,7 @@ class App extends Component {
     wineListToggle: false,
     pairsToggle: false,
     displayToggle: false,
+    favoritesToggle: false,
   }
 
   componentDidMount() {
@@ -188,7 +189,8 @@ class App extends Component {
     this.setState({
       wineListToggle: false,
       pairsToggle: false,
-      displayToggle: false
+      displayToggle: false,
+      favoritesToggle: false
     })
   }
 
@@ -210,7 +212,9 @@ class App extends Component {
     this.setState({
       wineListToggle: !this.state.wineListToggle,
       displayToggle: !this.state.displayToggle,
-      pairsToggle: false
+      pairsToggle: false,
+      favoritesToggle: false
+
     })
   }
 
@@ -218,7 +222,17 @@ class App extends Component {
     this.setState({
       wineListToggle: false,
       displayToggle: !this.state.displayToggle,
-      pairsToggle: !this.state.pairsToggle
+      pairsToggle: !this.state.pairsToggle,
+      favoritesToggle: false
+    })
+  }
+
+  handleFavoritesToggle = () => {
+    this.setState({
+      wineListToggle: false,
+      displayToggle: !this.state.displayToggle,
+      pairsToggle: false,
+      favoritesToggle: !this.state.favoritesToggle
     })
   }
 
@@ -226,7 +240,8 @@ class App extends Component {
     this.setState({
       wineListToggle: false,
       displayToggle: false,
-      pairsToggle: false
+      pairsToggle: false,
+      favoritesToggle: false
     })
   }
 
@@ -265,7 +280,7 @@ class App extends Component {
                   <Icon name='sign-out' />
                   Logout
                 </Menu.Item>
-                <Menu.Item as='a'>
+                <Menu.Item onClick={this.handleFavoritesToggle} as='a'>
                   <Icon name='heart' />
                   Favorite
                 </Menu.Item>
@@ -302,6 +317,9 @@ class App extends Component {
                   pairsToggle={this.state.pairsToggle}
                   foods={this.state.foods}
                   reviews={this.state.reviews}
+                  favoritesToggle={this.state.favoritesToggle}
+                  myFavorites={this.state.myFavorites}
+                  addToFavorites={this.addToFavorites}
                 /> :
                 <React.Fragment>
                   <FoodContainer
