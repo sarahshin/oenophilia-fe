@@ -29,7 +29,12 @@ class WineContainer extends React.Component {
   render() {
     return (
       <div>
-        {this.props.wineListToggle ? <FullWineList wines={this.props.wines}/> : null}
+        {this.props.wineListToggle ?
+          <FullWineList
+            wines={this.props.wines}
+          /> :
+          null
+        }
         <WineCategoryList
           filteredVarietals={this.props.filteredVarietals}
           handleWineCheck={this.handleCheck}
