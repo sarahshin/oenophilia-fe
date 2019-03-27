@@ -31,10 +31,14 @@ class WineContainer extends React.Component {
 
     return (
       <div>
-        <WineCategoryList wines={this.props.wines}
-        handleWineCheck={this.handleCheck}/>
-        <WineList checkedWines={this.state.filteredWines}
-        checked={this.state.checked}/>
+        <WineCategoryList
+          filteredVarietals={this.props.filteredVarietals}
+          handleWineCheck={this.handleCheck}
+        />
+        <WineList
+          checkedWines={this.state.filteredWines}
+          checked={this.state.checked}
+        />
       </div>
     )
   }
