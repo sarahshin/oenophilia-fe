@@ -2,8 +2,8 @@ import React from "react"
 
 import { Card, Button, Icon } from 'semantic-ui-react'
 
-const Wine = ({ wineitem, addToFavorites, addToPairings }) => {
-  //console.log(wineitem);
+const Wine = ({ wineitem, addToFavorites, addToPairings, selectedfood }) => {
+  //console.log(selectedfood);
 
   const handleClick = (wineitem) => {
     addToFavorites(wineitem.id, parseInt(localStorage.id))
@@ -22,7 +22,7 @@ const Wine = ({ wineitem, addToFavorites, addToPairings }) => {
       <Button onClick={()=>handleClick(wineitem)} icon color='red'>
         <Icon name='heart outline' />
       </Button>
-      <Button onClick={()=>addToPairings(wineitem)}>
+      <Button onClick={()=>addToPairings(selectedfood, wineitem)}>
         Select
       </Button>
     </Card>
