@@ -33,7 +33,8 @@ class App extends Component {
     displayToggle: false,
     favoritesToggle: false,
     selectedFood: null,
-    myPairs: []
+    myPairs: [],
+    favBtnClicked: false,
   }
 
   componentDidMount() {
@@ -74,7 +75,8 @@ class App extends Component {
       .then(r => r.json())
       .then(favorite => {
         this.setState({
-          myFavorites: [...this.state.myFavorites,favorite]
+          myFavorites: [...this.state.myFavorites,favorite],
+          favBtnClicked: true
         }, ()=>console.log(this.state.myFavorites, "added"))
       })
     } else {
@@ -83,7 +85,7 @@ class App extends Component {
         method: "DELETE"
       })
       let updatedFavorite = this.state.myFavorites.filter(fav => fav.wine_id !== wineID)
-      this.setState({ myFavorites: updatedFavorite })
+      this.setState({ myFavorites: updatedFavorite, favBtnClicked: false})
     }
   }
   //FETCH***********************************************************************
