@@ -30,12 +30,9 @@ class App extends Component {
     wineListToggle: false,
     pairsToggle: false,
     displayToggle: false,
-<<<<<<< HEAD
     favoritesToggle: false,
     selectedFood: null,
-=======
     myPairs: []
->>>>>>> pairings
   }
 
   componentDidMount() {
@@ -339,7 +336,7 @@ class App extends Component {
                     <FoodContainer
                     foods={this.state.foods}
                     selectFood={this.selectFood}
-<<<<<<< HEAD
+                    addToPairings={this.addToPairings}
                     /> :
                     <React.Fragment>
                       <FoodContainer
@@ -350,19 +347,10 @@ class App extends Component {
                       wines={this.state.wines}
                       filteredVarietals={this.state.filteredVarietals}
                       addToFavorites={this.addToFavorites}
+                      addToPairings={this.addToPairings}
                       />
                     </React.Fragment>
                   }
-=======
-                    addToPairings={this.addToPairings}
-                  />
-                  <WineContainer
-                    wines={this.state.wines}
-                    filteredVarietals={this.state.filteredVarietals}
-                    addToFavorites={this.addToFavorites}
-                    addToPairings={this.addToPairings}
-                  />
->>>>>>> pairings
                 </React.Fragment>
               }
             </Segment.Inline>
