@@ -8,7 +8,6 @@ import FullWineList from '../components/FullWineList'
 class WineContainer extends React.Component {
 
   state = {
-    checked: false,
     filteredWines: [],
   }
 

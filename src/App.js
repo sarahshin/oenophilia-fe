@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { NavLink, Route, Switch } from 'react-router-dom';
+// import { NavLink, Route, Switch } from 'react-router-dom';
 // import logo from './logo.svg';
 import FoodContainer from './containers/FoodContainer'
 import WineContainer from './containers/WineContainer'
@@ -86,7 +86,6 @@ class App extends Component {
       this.setState({ myFavorites: updatedFavorite })
     }
   }
-
   //FETCH***********************************************************************
   fetchFoods() {
     fetch('http://localhost:3000/api/v1/foods')
@@ -407,7 +406,6 @@ class App extends Component {
           </Sidebar.Pusher>
         </Sidebar.Pushable>
       </div>
-
     );
   }
 }

@@ -2,7 +2,7 @@ import React from "react"
 
 import ReviewForm from './ReviewForm'
 
-import { Card, Button } from 'semantic-ui-react'
+import { Card } from 'semantic-ui-react'
 
 const Pairs = ({ pair, foods, wines, reviews, updateReview }) => {
 
@@ -18,7 +18,6 @@ const Pairs = ({ pair, foods, wines, reviews, updateReview }) => {
         <p>Wine: {findWine.name}</p>
       </Card.Content>
       {myReview.rating ? null : <ReviewForm review={myReview.id} updateReview={updateReview}/>}
-      <Button color="red">Remove</Button>
     </Card>
   </React.Fragment>)
 }
