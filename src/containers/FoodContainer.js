@@ -5,12 +5,15 @@ import FoodList from '../components/FoodList'
 
 class FoodContainer extends React.Component {
 
+
   render() {
     return (
       <div>
         <FoodList
           foods={this.props.foods}
           selectFood={this.props.selectFood}
+          addToPairings={this.props.addToPairings}
+
         />
       </div>
     )

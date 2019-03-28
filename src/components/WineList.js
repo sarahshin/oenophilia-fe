@@ -6,7 +6,8 @@ import { Card } from 'semantic-ui-react'
 const WineList = (props) => {
   // console.log(props.checkedWines);
   const renderWine = () => {
-    return props.checkedWines.map(wine => <Wine key={wine.name} wineitem={wine} addToFavorites={props.addToFavorites} selected={false}/>)
+    return props.checkedWines.map(wine => <Wine key={wine.name} wineitem={wine} addToFavorites={props.addToFavorites}
+    addToPairings={props.addToPairings} selected={false}/>)
   }
 
   return (

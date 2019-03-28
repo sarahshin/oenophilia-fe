@@ -30,6 +30,9 @@ class App extends Component {
     wineListToggle: false,
     pairsToggle: false,
     displayToggle: false,
+    favoritesToggle: false,
+    selectedFood: null,
+    myPairs: []
   }
 
   componentDidMount() {
@@ -43,13 +46,15 @@ class App extends Component {
 
   //EVENT LISTENERS*************************************************************
   selectFood = (fooditem) => {
+    console.log(fooditem);
     let selectedFood = this.state.foods.find(food => food.name === fooditem)
     let relevantPairs = this.state.foodwines.filter(pair => pair.food_id === selectedFood.id)
     let relevantWines = relevantPairs.map(pair => pair.wine_id)
     let newFilteredVarietals = this.state.wines.filter(wine => relevantWines.includes(wine.id))
     this.setState({
+      selectedFood: selectedFood,
       filteredVarietals: newFilteredVarietals
-    })
+    },()=>console.log(this.state.selectedFood))
   }
 
   addToFavorites = (wineID, userID) => {
@@ -215,7 +220,8 @@ class App extends Component {
     this.setState({
       wineListToggle: false,
       pairsToggle: false,
-      displayToggle: false
+      displayToggle: false,
+      favoritesToggle: false
     })
   }
 
@@ -237,7 +243,9 @@ class App extends Component {
     this.setState({
       wineListToggle: !this.state.wineListToggle,
       displayToggle: !this.state.displayToggle,
-      pairsToggle: false
+      pairsToggle: false,
+      favoritesToggle: false
+
     })
   }
 
@@ -245,7 +253,17 @@ class App extends Component {
     this.setState({
       wineListToggle: false,
       displayToggle: !this.state.displayToggle,
-      pairsToggle: !this.state.pairsToggle
+      pairsToggle: !this.state.pairsToggle,
+      favoritesToggle: false
+    })
+  }
+
+  handleFavoritesToggle = () => {
+    this.setState({
+      wineListToggle: false,
+      displayToggle: !this.state.displayToggle,
+      pairsToggle: false,
+      favoritesToggle: !this.state.favoritesToggle
     })
   }
 
@@ -253,8 +271,15 @@ class App extends Component {
     this.setState({
       wineListToggle: false,
       displayToggle: false,
-      pairsToggle: false
+      pairsToggle: false,
+      favoritesToggle: false,
+      selectedFood: null,
+      filteredVarietals: this.state.wines
     })
+  }
+
+  addToPairings = (wine) => {
+    console.log("Hello From APPPP", wine);
   }
 
   render() {
@@ -292,7 +317,7 @@ class App extends Component {
                   <Icon name='sign-out' />
                   Logout
                 </Menu.Item>
-                <Menu.Item as='a'>
+                <Menu.Item onClick={this.handleFavoritesToggle} as='a'>
                   <Icon name='heart' />
                   Favorite
                 </Menu.Item>
@@ -330,17 +355,30 @@ class App extends Component {
                   foods={this.state.foods}
                   reviews={this.state.reviews}
                   updateReview={this.updateReview}
+                  favoritesToggle={this.state.favoritesToggle}
+                  myFavorites={this.state.myFavorites}
+                  addToFavorites={this.addToFavorites}
                 /> :
                 <React.Fragment>
-                  <FoodContainer
+                  {this.state.selectedFood === null ?
+                    <FoodContainer
                     foods={this.state.foods}
                     selectFood={this.selectFood}
-                  />
-                  <WineContainer
-                    wines={this.state.wines}
-                    filteredVarietals={this.state.filteredVarietals}
-                    addToFavorites={this.addToFavorites}
-                  />
+                    addToPairings={this.addToPairings}
+                    /> :
+                    <React.Fragment>
+                      <FoodContainer
+                      foods={this.state.foods}
+                      selectFood={this.selectFood}
+                      />
+                      <WineContainer
+                      wines={this.state.wines}
+                      filteredVarietals={this.state.filteredVarietals}
+                      addToFavorites={this.addToFavorites}
+                      addToPairings={this.addToPairings}
+                      />
+                    </React.Fragment>
+                  }
                 </React.Fragment>
               }
             </Segment.Inline>

@@ -2,11 +2,12 @@ import React from "react"
 
 import { Card, Button, Icon } from 'semantic-ui-react'
 
-const Wine = ({ wineitem, addToFavorites, addToPairings }) => {
-  //console.log(wineitem);
+const Favorites = ({ favorite, wines, addToFavorites }) => {
 
-  const handleClick = (wineitem) => {
-    addToFavorites(wineitem.id, parseInt(localStorage.id))
+  const wineitem = wines.find(wine => wine.id === favorite.wine_id)
+
+  const handleClick = (favorite) => {
+    addToFavorites(favorite.wine_id, parseInt(localStorage.id))
   }
 
   return (
@@ -19,14 +20,14 @@ const Wine = ({ wineitem, addToFavorites, addToPairings }) => {
       <p>{wineitem.description}</p>
       </Card.Content>
       <img src={wineitem.img} style={{width:'50px'}} alt={wineitem.name} />
-      <Button onClick={()=>handleClick(wineitem)} icon color='red'>
+      <Button onClick={()=>handleClick(favorite)} icon>
         <Icon name='heart outline' />
       </Button>
-      <Button onClick={()=>addToPairings(wineitem)}>
+      <Button>
         Select
       </Button>
     </Card>
   </React.Fragment>)
 }
 
-export default Wine
+export default Favorites
