@@ -4,11 +4,11 @@ import ReviewForm from './ReviewForm'
 
 import { Card, Button } from 'semantic-ui-react'
 
-const Pairs = ({ pair, foods, wines }) => {
-  //console.log(wineitem);
+const Pairs = ({ pair, foods, wines, reviews, updateReview }) => {
 
   const findFood = foods.find(food => food.id === pair.food_id)
   const findWine = wines.find(wine => wine.id === pair.wine_id)
+  const myReview = reviews.find(review => review.foodwine_id === pair.id)
 
   return (
   <React.Fragment>
@@ -17,7 +17,7 @@ const Pairs = ({ pair, foods, wines }) => {
         <p>Dish: {findFood.name}</p>
         <p>Wine: {findWine.name}</p>
       </Card.Content>
-      <ReviewForm />
+      {myReview.rating ? null : <ReviewForm review={myReview.id} updateReview={updateReview}/>}
       <Button color="red">Remove</Button>
     </Card>
   </React.Fragment>)

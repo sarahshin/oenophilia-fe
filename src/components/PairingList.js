@@ -3,17 +3,19 @@ import Pairs from './Pairs'
 
 import { Card } from 'semantic-ui-react'
 
-const PairingList = ({ foodwines, foods, wines, reviews }) => {
+const PairingList = ({ foodwines, foods, wines, reviews, updateReview }) => {
 
   const myReviews = reviews.filter(myReview => parseInt(myReview.user_id) === parseInt(localStorage.id))
-  const myFoodWines = myReviews.map(myFW => foodwines.find(foodwine => myFW.foodwine_id === foodwine.id))
+  const myFoodWines = myReviews.map(myFW => foodwines.find(foodwine =>  myFW.foodwine_id === foodwine.id))
 
   const renderPairs = () => {
-    console.log(myFoodWines)
     return myFoodWines.map(pair => <Pairs
       key={`pair_${pair.id}`}
-      pair={pair} foods={foods}
+      pair={pair}
+      foods={foods}
       wines={wines}
+      reviews={myReviews}
+      updateReview={updateReview}
     />)
   }
 

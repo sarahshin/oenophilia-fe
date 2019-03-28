@@ -164,6 +164,33 @@ class App extends Component {
     })
   }
 
+  updateReview = (review_id,rating,review) => {
+    const data = {
+      rating: rating,
+      review: review
+    }
+    fetch(`http://localhost:3000/api/v1/reviews/${review_id}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type':'application/json',
+        'Accepts':'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+    .then(r => r.json())
+    .then(editted_review => {
+      let updatedReviews = this.state.reviews.map(review => {
+        if (review.id === editted_review.id) {
+          return editted_review
+        }
+        return review
+      })
+      this.setState({
+        reviews: updatedReviews
+      })
+    })
+  }
+
   handleChange = (event) => {
     this.setState({[event.target.name]: event.target.value})
   }
@@ -302,6 +329,7 @@ class App extends Component {
                   pairsToggle={this.state.pairsToggle}
                   foods={this.state.foods}
                   reviews={this.state.reviews}
+                  updateReview={this.updateReview}
                 /> :
                 <React.Fragment>
                   <FoodContainer

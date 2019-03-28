@@ -51,10 +51,6 @@
   width: 350px;
 }
 
-.reviewForm {
-
-}
-
 .ui.card, .ui.cards>.card {
   width: 225px;
 }
@@ -68,5 +64,5 @@
 }
 
 #root > div > div > div.pusher > div > div > div > div > div > div.reviewForm > form > div.fields {
-  margin-left: 13.5%;
+  margin-left: 14.5%;
 }
