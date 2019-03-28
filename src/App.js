@@ -45,7 +45,7 @@ class App extends Component {
 
   //EVENT LISTENERS*************************************************************
   selectFood = (fooditem) => {
-    console.log(fooditem);
+    //console.log(fooditem);
     let selectedFood = this.state.foods.find(food => food.name === fooditem)
     let relevantPairs = this.state.foodwines.filter(pair => pair.food_id === selectedFood.id)
     let relevantWines = relevantPairs.map(pair => pair.wine_id)
@@ -53,7 +53,7 @@ class App extends Component {
     this.setState({
       selectedFood: selectedFood,
       filteredVarietals: newFilteredVarietals
-    },()=>console.log(this.state.selectedFood))
+    })
   }
 
   addToFavorites = (wineID, userID) => {
@@ -168,6 +168,33 @@ class App extends Component {
     })
   }
 
+  updateReview = (review_id,rating,review) => {
+    const data = {
+      rating: rating,
+      review: review
+    }
+    fetch(`http://localhost:3000/api/v1/reviews/${review_id}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type':'application/json',
+        'Accepts':'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+    .then(r => r.json())
+    .then(editted_review => {
+      let updatedReviews = this.state.reviews.map(review => {
+        if (review.id === editted_review.id) {
+          return editted_review
+        }
+        return review
+      })
+      this.setState({
+        reviews: updatedReviews
+      })
+    })
+  }
+
   handleChange = (event) => {
     this.setState({[event.target.name]: event.target.value})
   }
@@ -250,8 +277,30 @@ class App extends Component {
     })
   }
 
-  addToPairings = (wine) => {
-    console.log("Hello From APPPP", wine);
+  addToPairings = (food, wine) => {
+    // console.log("food", food)
+    // console.log("wine", wine);
+    let pairing = this.state.foodwines.find(foodwine => {
+      return (food.id === foodwine.food_id && wine.id === foodwine.wine_id)
+    })
+    //console.log(pairing.id, parseInt(localStorage.id));
+    fetch("http://localhost:3000/api/v1/reviews", {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+        'Accepts': 'application/json'
+      },
+      body: JSON.stringify({
+        foodwine_id: pairing.id,
+        user_id: localStorage.id
+      })
+    })
+    .then(r => r.json())
+    .then(newReview => {
+      this.setState({
+        reviews: [...this.state.reviews, newReview]
+      })
+    })
   }
 
   render() {
@@ -326,6 +375,7 @@ class App extends Component {
                   pairsToggle={this.state.pairsToggle}
                   foods={this.state.foods}
                   reviews={this.state.reviews}
+                  updateReview={this.updateReview}
                   favoritesToggle={this.state.favoritesToggle}
                   myFavorites={this.state.myFavorites}
                   addToFavorites={this.addToFavorites}
@@ -335,7 +385,6 @@ class App extends Component {
                     <FoodContainer
                     foods={this.state.foods}
                     selectFood={this.selectFood}
-                    addToPairings={this.addToPairings}
                     /> :
                     <React.Fragment>
                       <FoodContainer
@@ -347,6 +396,7 @@ class App extends Component {
                       filteredVarietals={this.state.filteredVarietals}
                       addToFavorites={this.addToFavorites}
                       addToPairings={this.addToPairings}
+                      selectedfood={this.state.selectedFood}
                       />
                     </React.Fragment>
                   }

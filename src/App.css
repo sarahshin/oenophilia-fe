@@ -62,3 +62,7 @@
 .ui.segment.pushable {
   min-height:915px;
 }
+
+#root > div > div > div.pusher > div > div > div > div > div > div.reviewForm > form > div.fields {
+  margin-left: 14.5%;
+}

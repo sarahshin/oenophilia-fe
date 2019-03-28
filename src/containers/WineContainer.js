@@ -14,7 +14,7 @@ class WineContainer extends React.Component {
 
 
   handleCheck = (e) => {
-    console.log(e.target.checked);
+    //console.log(e.target.checked);
 
      let filteredWines = this.props.wines.filter(wine => wine.variety === e.target.value)
     if(e.target.checked === true){
@@ -32,6 +32,7 @@ class WineContainer extends React.Component {
    }
 
   render() {
+
 
     return (
       <div>
@@ -51,6 +52,7 @@ class WineContainer extends React.Component {
           checked={this.state.checked}
           addToFavorites={this.props.addToFavorites}
           addToPairings={this.props.addToPairings}
+          selectedfood={this.props.selectedfood}
         />
       </div>
     )
