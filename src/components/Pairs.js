@@ -18,7 +18,6 @@ const Pairs = ({ pair, foods, wines, reviews, updateReview }) => {
         <p>Wine: {findWine.name}</p>
       </Card.Content>
       {myReview.rating ? null : <ReviewForm review={myReview.id} updateReview={updateReview}/>}
-      <Button color="red">Remove</Button>
     </Card>
   </React.Fragment>)
 }
