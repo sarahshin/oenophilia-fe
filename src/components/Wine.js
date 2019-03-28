@@ -2,7 +2,7 @@ import React from "react"
 
 import { Card, Button, Icon } from 'semantic-ui-react'
 
-const Wine = ({ wineitem, addToFavorites, addToPairings }) => {
+const Wine = ({ wineitem, addToFavorites, addToPairings, wineListToggle }) => {
   //console.log(wineitem);
 
   const handleClick = (wineitem) => {
@@ -19,12 +19,14 @@ const Wine = ({ wineitem, addToFavorites, addToPairings }) => {
       <p>{wineitem.description}</p>
       </Card.Content>
       <img src={wineitem.img} style={{width:'50px'}} alt={wineitem.name} />
-      <Button onClick={()=>handleClick(wineitem)} icon color='red'>
+      { wineListToggle ? null : <React.Fragment>
+        <Button onClick={()=>handleClick(wineitem)} icon color='red'>
         <Icon name='heart outline' />
-      </Button>
-      <Button onClick={()=>addToPairings(wineitem)}>
-        Select
-      </Button>
+        </Button>
+        <Button onClick={()=>addToPairings(wineitem)}>
+          Select
+        </Button>
+      </React.Fragment>}
     </Card>
   </React.Fragment>)
 }

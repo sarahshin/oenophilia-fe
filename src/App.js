@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { NavLink, Route, Switch } from 'react-router-dom';
 // import logo from './logo.svg';
 import FoodContainer from './containers/FoodContainer'
 import WineContainer from './containers/WineContainer'
@@ -241,19 +242,18 @@ class App extends Component {
 
   handleWineListToggle = () => {
     this.setState({
-      wineListToggle: !this.state.wineListToggle,
-      displayToggle: !this.state.displayToggle,
+      wineListToggle: true,
+      displayToggle: true,
       pairsToggle: false,
       favoritesToggle: false
-
     })
   }
 
   handlePairListToggle = () => {
     this.setState({
       wineListToggle: false,
-      displayToggle: !this.state.displayToggle,
-      pairsToggle: !this.state.pairsToggle,
+      displayToggle: true,
+      pairsToggle: true,
       favoritesToggle: false
     })
   }
@@ -261,9 +261,9 @@ class App extends Component {
   handleFavoritesToggle = () => {
     this.setState({
       wineListToggle: false,
-      displayToggle: !this.state.displayToggle,
+      displayToggle: true,
       pairsToggle: false,
-      favoritesToggle: !this.state.favoritesToggle
+      favoritesToggle: true
     })
   }
 
@@ -364,7 +364,6 @@ class App extends Component {
                     <FoodContainer
                     foods={this.state.foods}
                     selectFood={this.selectFood}
-                    addToPairings={this.addToPairings}
                     /> :
                     <React.Fragment>
                       <FoodContainer
