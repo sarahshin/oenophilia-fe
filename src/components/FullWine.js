@@ -1,13 +1,9 @@
 import React from "react"
 
-import { Card, Button, Icon } from 'semantic-ui-react'
+import { Card } from 'semantic-ui-react'
 
 const FullWine = ({ wineitem, addToFavorites, addToPairings }) => {
   //console.log(wineitem);
-
-  const handleClick = (wineitem) => {
-    addToFavorites(wineitem.id, parseInt(localStorage.id))
-  }
 
   return (
   <React.Fragment>
