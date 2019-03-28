@@ -30,12 +30,9 @@ class App extends Component {
     wineListToggle: false,
     pairsToggle: false,
     displayToggle: false,
-<<<<<<< HEAD
     favoritesToggle: false,
     selectedFood: null,
-=======
     myPairs: []
->>>>>>> pairings
   }
 
   componentDidMount() {
@@ -49,7 +46,7 @@ class App extends Component {
 
   //EVENT LISTENERS*************************************************************
   selectFood = (fooditem) => {
-    console.log(fooditem);
+    //console.log(fooditem);
     let selectedFood = this.state.foods.find(food => food.name === fooditem)
     let relevantPairs = this.state.foodwines.filter(pair => pair.food_id === selectedFood.id)
     let relevantWines = relevantPairs.map(pair => pair.wine_id)
@@ -57,7 +54,7 @@ class App extends Component {
     this.setState({
       selectedFood: selectedFood,
       filteredVarietals: newFilteredVarietals
-    },()=>console.log(this.state.selectedFood))
+    })
   }
 
   addToFavorites = (wineID, userID) => {
@@ -254,8 +251,30 @@ class App extends Component {
     })
   }
 
-  addToPairings = (wine) => {
-    console.log("Hello From APPPP", wine);
+  addToPairings = (food, wine) => {
+    // console.log("food", food)
+    // console.log("wine", wine);
+    let pairing = this.state.foodwines.find(foodwine => {
+      return (food.id === foodwine.food_id && wine.id === foodwine.wine_id)
+    })
+    //console.log(pairing.id, parseInt(localStorage.id));
+    fetch("http://localhost:3000/api/v1/reviews", {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+        'Accepts': 'application/json'
+      },
+      body: JSON.stringify({
+        foodwine_id: pairing.id,
+        user_id: localStorage.id
+      })
+    })
+    .then(r => r.json())
+    .then(newReview => {
+      this.setState({
+        reviews: [...this.state.reviews, newReview]
+      })
+    })
   }
 
   render() {
@@ -339,7 +358,6 @@ class App extends Component {
                     <FoodContainer
                     foods={this.state.foods}
                     selectFood={this.selectFood}
-<<<<<<< HEAD
                     /> :
                     <React.Fragment>
                       <FoodContainer
@@ -350,19 +368,12 @@ class App extends Component {
                       wines={this.state.wines}
                       filteredVarietals={this.state.filteredVarietals}
                       addToFavorites={this.addToFavorites}
+                      addToPairings={this.addToPairings}
+                      foodwines={this.state.foodwines}
+                      selectedfood={this.state.selectedFood}
                       />
                     </React.Fragment>
                   }
-=======
-                    addToPairings={this.addToPairings}
-                  />
-                  <WineContainer
-                    wines={this.state.wines}
-                    filteredVarietals={this.state.filteredVarietals}
-                    addToFavorites={this.addToFavorites}
-                    addToPairings={this.addToPairings}
-                  />
->>>>>>> pairings
                 </React.Fragment>
               }
             </Segment.Inline>
