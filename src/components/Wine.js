@@ -1,6 +1,6 @@
 import React, { Fragment } from "react"
 
-import { Card, Button, Icon } from 'semantic-ui-react'
+import { Card, Button, Icon, Image } from 'semantic-ui-react'
 
 const Wine = ({ wineitem, addToFavorites, addToPairings, selectedfood }) => {
   //console.log(selectedfood);
@@ -18,7 +18,7 @@ const Wine = ({ wineitem, addToFavorites, addToPairings, selectedfood }) => {
       <p>{wineitem.variety}</p>
       <p>{wineitem.description}</p>
       </Card.Content>
-      <img src={wineitem.img} style={{width:'50px'}} alt={wineitem.name} />
+      <Image centered src={wineitem.img} style={{width:'50px'}} alt={wineitem.name} />
         { !localStorage.id ? null :
           <Fragment>
             <Button.Group>

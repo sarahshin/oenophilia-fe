@@ -332,7 +332,7 @@ class App extends Component {
           <Sidebar as={Menu} animation='push' icon='labeled' inverted vertical visible width='thin'>
             <Menu.Item onClick={this.handleHome} as='a'>
               <Icon name='home' />
-              Home
+              Oenophilia
             </Menu.Item>
             { localStorage.getItem('id') ?
               <React.Fragment>

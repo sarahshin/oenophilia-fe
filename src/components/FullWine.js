@@ -1,6 +1,6 @@
 import React from "react"
 
-import { Card } from 'semantic-ui-react'
+import { Card, Image } from 'semantic-ui-react'
 
 const FullWine = ({ wineitem, addToFavorites, addToPairings }) => {
   //console.log(wineitem);
@@ -14,7 +14,7 @@ const FullWine = ({ wineitem, addToFavorites, addToPairings }) => {
       <p>{wineitem.variety}</p>
       <p>{wineitem.description}</p>
       </Card.Content>
-      <img src={wineitem.img} style={{width:'50px'}} alt={wineitem.name} />
+      <Image centered src={wineitem.img} style={{width:'50px'}} alt={wineitem.name} />
     </Card>
   </React.Fragment>)
 }

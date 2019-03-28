@@ -1,6 +1,6 @@
 import React from "react"
 
-import { Card, Button, Icon } from 'semantic-ui-react'
+import { Card, Button, Icon, Image } from 'semantic-ui-react'
 
 const Favorites = ({ favorite, wines, addToFavorites }) => {
 
@@ -19,7 +19,7 @@ const Favorites = ({ favorite, wines, addToFavorites }) => {
       <p>{wineitem.variety}</p>
       <p>{wineitem.description}</p>
       </Card.Content>
-      <img src={wineitem.img} style={{width:'50px'}} alt={wineitem.name} />
+      <Image centered src={wineitem.img} style={{width:'50px'}} alt={wineitem.name} />
       <Button color="red" onClick={()=>handleClick(favorite)} icon>
         <Icon name='heart outline' />
       </Button>
