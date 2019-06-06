@@ -27,7 +27,6 @@ class WineContainer extends React.Component {
          })
         //console.log("Hellooooo", e.target.value);
         }
-
    }
 
   render() {
